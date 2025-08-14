@@ -14,7 +14,7 @@ class QwqTag(BaseModel):
     attr: dict[str, str]
 
     @staticmethod
-    def from_str(string: str):
+    def from_str(string: str) -> list["str | QwqTag"]:
         """Parse the complete XML string."""
         if not string.strip():
             return []
