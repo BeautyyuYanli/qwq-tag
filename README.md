@@ -139,7 +139,7 @@ malformed = '<div><p>Unclosed paragraph<span>Text</div>'
 try:
     result = QwqTag.from_str(malformed)
     print("Successfully parsed malformed XML!")
-    print(f"Root element: {result[0].name}")
+    print(str(result[0]))
 except Exception as e:
     print(f"Parsing failed: {e}")
 ```
@@ -157,55 +157,6 @@ tag = QwqTag(
 print(str(tag))
 # Output: <article class="post" id="123">Article content</article>
 ```
-
-## API Reference
-
-### `QwqTag` Class
-
-The main class representing an XML/HTML element.
-
-#### Attributes
-
-- **`name: str`** - The tag name (e.g., "div", "p", "span")
-- **`content: list[str | QwqTag]`** - List of text strings and nested QwqTag objects
-- **`attr: dict[str, str]`** - Dictionary of element attributes (keys are lowercased)
-
-#### Properties
-
-- **`content_text: str`** - Returns all content as a concatenated string
-
-#### Methods
-
-##### `QwqTag.from_str(xml_string: str) -> list[QwqTag]`
-
-Parse an XML/HTML string into a list of QwqTag objects.
-
-**Parameters:**
-- `xml_string`: The XML/HTML string to parse
-
-**Returns:**
-- List of QwqTag objects representing the root elements
-
-**Raises:**
-- `ValidationError`: If the XML cannot be parsed even with recovery mode
-
-##### `QwqTag.from_lxml(element: lxml.etree._Element) -> QwqTag`
-
-Convert an lxml Element to a QwqTag object.
-
-**Parameters:**
-- `element`: An lxml Element object
-
-**Returns:**
-- QwqTag object representing the element
-
-##### `__str__() -> str`
-
-Convert the QwqTag back to an XML string representation.
-
-**Returns:**
-- XML string representation of the tag
-
 ## Development
 
 ### Setup Development Environment
