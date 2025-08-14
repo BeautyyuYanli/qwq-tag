@@ -40,7 +40,7 @@ class QwqTag(BaseModel):
     
         # Add text content if it exists and is not just whitespace
         if element.text and element.text.strip():
-            content.append(element.text.strip())
+            content.append(element.text)
     
         # Process child elements
         for child in element: # type: ignore
@@ -49,12 +49,10 @@ class QwqTag(BaseModel):
     
             # Add tail text if it exists and is not just whitespace
             if child.tail and child.tail.strip():
-                content.append(child.tail.strip())
+                content.append(child.tail)
     
         # Handle attributes - lxml provides attrib as a dict-like object
         attr = dict({k.lower(): v for k, v in element.attrib.items()})
-        # if "content" in attr:
-        #     content.append(attr["content"].strip())
 
         return QwqTag(name=element.tag, content=content, attr=attr)
     
@@ -65,7 +63,9 @@ class QwqTag(BaseModel):
                 for k, v in self.attr.items()
             ]
         )
-        return f"<{self.name} {attr_str}>{self.content_text}</{self.name}>"
+        if attr_str: 
+            attr_str = " " + attr_str
+        return f"<{self.name}{attr_str}>{self.content_text}</{self.name}>"
 
     @property
     def content_text(self) -> str:
